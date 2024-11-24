@@ -1,17 +1,17 @@
-#include "config.hpp"
+#include "vconfig.hpp"
 
 #include <fmt/base.h>
 #include <fstream>
 
-Config config;
+Vconfig vConfig;
 
-Config::Config() {
+Vconfig::Vconfig() {
     set("app_name", "vUtility");
     set("ini_file", "config.ini");
     set("shutdown_time", "6000");
 }
 
-bool Config::loadIni(const std::string& fileName) {
+bool Vconfig::loadIni(const std::string& fileName) {
     std::ifstream file(fileName);
     if (!file.is_open()) {
         fmt::print("Could not open file \"{}\"\n", fileName);
@@ -40,7 +40,7 @@ bool Config::loadIni(const std::string& fileName) {
     return true;
 }
 
-bool Config::saveIni(const std::string& fileName) {
+bool Vconfig::saveIni(const std::string& fileName) {
     std::ofstream file(fileName);
     if (!file.is_open()) {
         fmt::print("Could not open file \"{}\"\n", fileName);
@@ -54,7 +54,7 @@ bool Config::saveIni(const std::string& fileName) {
     return true;
 }
 
-std::string Config::get(const std::string& key, std::string defaultValue) {
+std::string Vconfig::get(const std::string& key, std::string defaultValue) {
     auto it = m_data.find(key);
     if (it == m_data.end()) {
         return defaultValue;
@@ -63,18 +63,18 @@ std::string Config::get(const std::string& key, std::string defaultValue) {
     return m_data[key];
 }
 
-void Config::set(const std::string key, const std::string value) {
+void Vconfig::set(const std::string key, const std::string value) {
     m_data[key] = value;
 }
 
-void Config::setAndSave(const std::string& key, const std::string& value, const std::string& iniFile) {
+void Vconfig::setAndSave(const std::string& key, const std::string& value, const std::string& iniFile) {
     set(key, value);
 
     m_persistentData[key] = value;
     saveIni(iniFile);
 }
 
-std::string Config::trim(const std::string& string) {
+std::string Vconfig::trim(const std::string& string) {
     size_t start = string.find_first_not_of(" \t\n\r\f\v");
     size_t end = string.find_last_not_of(" \t\n\r\f\v");
 

@@ -3,12 +3,12 @@
 #include <map>
 #include <string>
 
-class Config {
+class Vconfig {
    public:
     const std::string APP_NAME;
 
    public:
-    Config();
+    Vconfig();
 
     std::string get(const std::string& key, std::string defaultValue = "");
     void set(const std::string key, const std::string value);
@@ -25,4 +25,4 @@ class Config {
     bool saveIni(const std::string& fileName);
 };
 
-extern Config config;
+extern Vconfig vConfig;
