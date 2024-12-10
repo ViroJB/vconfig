@@ -1,20 +1,17 @@
 #include "vconfig.hpp"
 
-#include <fmt/base.h>
 #include <fstream>
 
 Vconfig vConfig;
 
 Vconfig::Vconfig() {
-    set("app_name", "vUtility");
     set("ini_file", "config.ini");
-    set("shutdown_time", "6000");
 }
 
+// returns false if file coudn't be open
 bool Vconfig::loadIni(const std::string& fileName) {
     std::ifstream file(fileName);
     if (!file.is_open()) {
-        fmt::print("Could not open file \"{}\"\n", fileName);
         return false;
     }
 
@@ -33,17 +30,12 @@ bool Vconfig::loadIni(const std::string& fileName) {
         }
     }
 
-    for (auto [key, value] : m_data) {
-        fmt::print("Key: \"{}\", Value: \"{}\"\n", key, value);
-    }
-
     return true;
 }
 
 bool Vconfig::saveIni(const std::string& fileName) {
     std::ofstream file(fileName);
     if (!file.is_open()) {
-        fmt::print("Could not open file \"{}\"\n", fileName);
         return false;
     }
 
